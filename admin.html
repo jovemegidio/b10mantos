@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | B10 Mantos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#111">
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <span>⚽</span>
+                <h1>B10 <span>MANTOS</span></h1>
+                <p>Painel Administrativo</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Usuário</label>
+                    <input type="text" id="loginUser" placeholder="bruno" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+                <div class="login-error" id="loginError" style="display:none"><i class="fas fa-exclamation-circle"></i> Usuário ou senha incorretos</div>
+                <button type="submit" class="btn-login">Entrar <i class="fas fa-arrow-right"></i></button>
+            </form>
+            <small>Padrão: bruno / bruno123</small>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div class="admin-wrapper" id="adminWrapper" style="display:none">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-logo">
+                <span>⚽</span>
+                <div><strong>B10</strong> Admin</div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <a href="#" class="nav-link" data-section="products"><i class="fas fa-tshirt"></i> Produtos</a>
+                <a href="#" class="nav-link" data-section="reviews"><i class="fas fa-star"></i> Avaliações</a>
+                <a href="#" class="nav-link" data-section="orders"><i class="fas fa-shopping-bag"></i> Pedidos</a>
+                <a href="#" class="nav-link" data-section="customers"><i class="fas fa-users"></i> Clientes</a>
+                <a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Configurações</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Loja</a>
+                <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-main">
+            <!-- TOP BAR -->
+            <header class="admin-topbar">
+                <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+                <h2 id="sectionTitle">Dashboard</h2>
+                <div class="topbar-right">
+                    <span class="admin-greeting">Olá, <strong>Bruno</strong></span>
+                    <div class="admin-avatar" id="adminAvatar"><img src="bruno-avatar.jpg" alt="Bruno" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.textContent='BT'"></div>
+                </div>
+            </header>
+
+            <!-- DASHBOARD SECTION -->
+            <section class="admin-section active" id="sec-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon blue"><i class="fas fa-shopping-bag"></i></div>
+                        <div class="stat-card-info">
+                            <span class="stat-card-value" id="statOrders">47</span>
+                            <span class="stat-card-label">Pedidos este mês</span>
+                        </div>
+                        <span class="stat-card-trend up"><i class="fas fa-arrow-up"></i> 12%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon green"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="stat-card-info">
+                            <span class="stat-card-value" id="statRevenue">R$ 7.284</span>
+                            <span class="stat-card-label">Receita do mês</span>
+                        </div>
+                        <span class="stat-card-trend up"><i class="fas fa-arrow-up"></i> 8%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon orange"><i class="fas fa-tshirt"></i></div>
+                        <div class="stat-card-info">
+                            <span class="stat-card-value" id="statProducts">14</span>
+                            <span class="stat-card-label">Produtos ativos</span>
+                        </div>
+                        <span class="stat-card-trend neutral"><i class="fas fa-minus"></i> 0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon purple"><i class="fas fa-star"></i></div>
+                        <div class="stat-card-info">
+                            <span class="stat-card-value" id="statRating">4.8</span>
+                            <span class="stat-card-label">Nota média</span>
+                        </div>
+                        <span class="stat-card-trend up"><i class="fas fa-arrow-up"></i> 0.2</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h3><i class="fas fa-fire"></i> Produtos Mais Vendidos</h3>
+                        <div class="top-products-list" id="topProductsList"></div>
+                    </div>
+                    <div class="dash-card">
+                        <h3><i class="fas fa-clock"></i> Pedidos Recentes</h3>
+                        <div class="recent-orders-list" id="recentOrdersList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRODUCTS SECTION -->
+            <section class="admin-section" id="sec-products">
+                <div class="section-toolbar">
+                    <div class="toolbar-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar produto..." id="productSearch">
+                    </div>
+                    <button class="btn-admin-primary" id="addProductBtn"><i class="fas fa-plus"></i> Novo Produto</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Preço Original</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- REVIEWS SECTION -->
+            <section class="admin-section" id="sec-reviews">
+                <div class="section-toolbar">
+                    <div class="toolbar-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar avaliação..." id="reviewSearch">
+                    </div>
+                    <button class="btn-admin-primary" id="addReviewBtn"><i class="fas fa-plus"></i> Nova Avaliação</button>
+                </div>
+                <div class="reviews-grid" id="reviewsGrid"></div>
+            </section>
+
+            <!-- ORDERS SECTION -->
+            <section class="admin-section" id="sec-orders">
+                <div class="section-toolbar">
+                    <div class="toolbar-filters">
+                        <button class="filter-btn active" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="pending">Pendentes</button>
+                        <button class="filter-btn" data-filter="shipped">Enviados</button>
+                        <button class="filter-btn" data-filter="delivered">Entregues</button>
+                    </div>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#Pedido</th>
+                                <th>Cliente</th>
+                                <th>Produto</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CUSTOMERS SECTION -->
+            <section class="admin-section" id="sec-customers">
+                <div class="section-toolbar">
+                    <div class="toolbar-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar cliente..." id="customerSearch">
+                    </div>
+                    <span class="toolbar-count" id="customerCount">0 clientes</span>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>WhatsApp</th>
+                                <th>Pedidos</th>
+                                <th>Total Gasto</th>
+                                <th>Último Pedido</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SETTINGS SECTION -->
+            <section class="admin-section" id="sec-settings">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-store"></i> Dados da Loja</h3>
+                        <form id="settingsStoreForm">
+                            <div class="form-group">
+                                <label>Nome da Loja</label>
+                                <input type="text" id="storeName" value="B10 Mantos">
+                            </div>
+                            <div class="form-group">
+                                <label>Slogan</label>
+                                <input type="text" id="storeSlogan" value="A Elite das Camisas de Futebol">
+                            </div>
+                            <div class="form-group">
+                                <label>CNPJ</label>
+                                <input type="text" id="storeCNPJ" value="XX.XXX.XXX/0001-XX">
+                            </div>
+                            <div class="form-group">
+                                <label>Email de Contato</label>
+                                <input type="email" id="storeEmail" value="bruno.teles2@icloud.com">
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp</label>
+                                <input type="text" id="storeWhatsApp" value="5511954555972">
+                            </div>
+                            <div class="form-group">
+                                <label>Instagram</label>
+                                <input type="text" id="storeInstagram" value="@b10mantos">
+                            </div>
+                            <button type="submit" class="btn-admin-primary">Salvar Alterações</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-truck"></i> Frete & Pagamento</h3>
+                        <form id="settingsShippingForm">
+                            <div class="form-group">
+                                <label>Frete grátis acima de (R$)</label>
+                                <input type="number" id="freeShipping" value="299.90" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Desconto PIX (%)</label>
+                                <input type="number" id="pixDiscount" value="5" min="0" max="30">
+                            </div>
+                            <div class="form-group">
+                                <label>Máx. parcelas sem juros</label>
+                                <input type="number" id="maxInstallments" value="2" min="1" max="12">
+                            </div>
+                            <div class="form-group">
+                                <label>Cupom de Newsletter</label>
+                                <input type="text" id="newsletterCoupon" value="B10OFF10">
+                            </div>
+                            <div class="form-group">
+                                <label>Desconto do Cupom (%)</label>
+                                <input type="number" id="couponDiscount" value="10" min="0" max="50">
+                            </div>
+                            <button type="submit" class="btn-admin-primary">Salvar Alterações</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-palette"></i> Aparência</h3>
+                        <form id="settingsAppearanceForm">
+                            <div class="form-group">
+                                <label>Cor Principal</label>
+                                <div class="color-input-wrap">
+                                    <input type="color" id="primaryColor" value="#ff4500">
+                                    <span id="colorHex">#ff4500</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Texto do Banner Rotativo</label>
+                                <textarea id="announcementText" rows="3">🔥 LANÇAMENTO: Novas camisas 2025/2026 disponíveis!
+⚡ FRETE GRÁTIS acima de R$ 299,90
+💳 Parcele em até 2x sem juros</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Texto Hero Slide 1 - Título</label>
+                                <input type="text" id="heroTitle1" value="Vista o Seu Manto Sagrado">
+                            </div>
+                            <div class="form-group">
+                                <label>Texto Hero Slide 2 - Título</label>
+                                <input type="text" id="heroTitle2" value="Até 13% OFF em Camisas Selecionadas">
+                            </div>
+                            <button type="submit" class="btn-admin-primary">Salvar Alterações</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3><i class="fas fa-shield-alt"></i> Segurança & Perfil</h3>
+                        <div class="admin-profile-photo" style="text-align:center;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid #e2e8f0">
+                            <div id="settingsAvatar" style="width:90px;height:90px;border-radius:50%;background:var(--admin-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;margin:0 auto 12px;overflow:hidden;border:3px solid #e2e8f0">BT</div>
+                            <label for="avatarUpload" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--admin-primary);color:#fff;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s"><i class="fas fa-camera"></i> Alterar Foto</label>
+                            <input type="file" id="avatarUpload" accept="image/*" style="display:none">
+                            <p style="font-size:12px;color:#94a3b8;margin-top:8px">JPG, PNG ou WEBP • Máx 1MB</p>
+                        </div>
+                        <form id="settingsSecurityForm">
+                            <div class="form-group">
+                                <label>Usuário Admin</label>
+                    <input type="text" id="adminUser" value="bruno">
+                            </div>
+                            <div class="form-group">
+                                <label>Nova Senha</label>
+                                <input type="password" id="newPassword" placeholder="••••••••">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar Senha</label>
+                                <input type="password" id="confirmPassword" placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="btn-admin-primary">Alterar Senha</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL (Product / Review Edit) -->
+    <div class="admin-modal" id="adminModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header">
+                <h3 id="modalTitle">Editar</h3>
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn-admin-secondary" id="modalCancel">Cancelar</button>
+                <button class="btn-admin-primary" id="modalSave">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

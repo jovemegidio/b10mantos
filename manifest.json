@@ -1,0 +1,20 @@
+{
+    "name": "B10 Mantos - A Elite das Camisas de Futebol",
+    "short_name": "B10 Mantos",
+    "description": "Camisas tailandesas 1:1 com qualidade premium. A melhor loja de camisas de futebol do Brasil.",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff4500",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["shopping", "sports"],
+    "lang": "pt-BR"
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://b10mantos.com.br/sitemap.xml
+
+Disallow: /admin.html
+Disallow: /admin.css
+Disallow: /admin.js
